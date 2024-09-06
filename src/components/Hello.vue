@@ -13,12 +13,14 @@
     </div>
 
     <div class="col-md-3">
-      <draggable class="list-group" tag="ul" v-model="list" v-bind="dragOptions" :move="onMove" @start="isDragging=true" @end="isDragging=false">
+      <draggable class="list-group" tag="ul" v-model="list" v-bind="dragOptions" :move="onMove"
+        @start="isDragging = true" @end="isDragging = false">
         <transition-group type="transition" :name="'flip-list'">
           <li class="list-group-item" v-for="element in list" :key="element.order">
-            <i :class="element.fixed? 'fa fa-anchor' : 'glyphicon glyphicon-pushpin'" @click=" element.fixed=! element.fixed" aria-hidden="true"></i>
-            {{element.name}}
-            <span class="badge">{{element.order}}</span>
+            <i :class="element.fixed ? 'fa fa-anchor' : 'glyphicon glyphicon-pushpin'"
+              @click=" element.fixed = !element.fixed" aria-hidden="true"></i>
+            {{ element.name }}
+            <span class="badge">{{ element.order }}</span>
           </li>
         </transition-group>
       </draggable>
@@ -28,19 +30,20 @@
       <draggable element="span" v-model="list2" v-bind="dragOptions" :move="onMove">
         <transition-group name="no" class="list-group" tag="ul">
           <li class="list-group-item" v-for="element in list2" :key="element.order">
-            <i :class="element.fixed? 'fa fa-anchor' : 'glyphicon glyphicon-pushpin'" @click=" element.fixed=! element.fixed" aria-hidden="true"></i>
-            {{element.name}}
-            <span class="badge">{{element.order}}</span>
+            <i :class="element.fixed ? 'fa fa-anchor' : 'glyphicon glyphicon-pushpin'"
+              @click=" element.fixed = !element.fixed" aria-hidden="true"></i>
+            {{ element.name }}
+            <span class="badge">{{ element.order }}</span>
           </li>
         </transition-group>
       </draggable>
     </div>
 
     <div class="list-group col-md-3">
-      <pre>{{listString}}</pre>
+      <pre>{{ listString }}</pre>
     </div>
     <div class="list-group col-md-3">
-      <pre>{{list2String}}</pre>
+      <pre>{{ list2String }}</pre>
     </div>
   </div>
 </template>
@@ -48,14 +51,14 @@
 <script>
 import draggable from "vuedraggable";
 const message = [
-  "vue.draggable",
-  "draggable",
-  "component",
-  "for",
-  "vue.js 2.0",
-  "based",
-  "on",
-  "Sortablejs"
+  { "name": "vue.draggable", "order": 1, "fixed": false },
+  { "name": "draggable", "order": 2, "fixed": false },
+  { "name": "component", "order": 3, "fixed": false },
+  { "name": "for", "order": 4, "fixed": false },
+  { "name": "vue.js 2.0", "order": 5, "fixed": false },
+  { "name": "based", "order": 6, "fixed": false },
+  { "name": "on", "order": 7, "fixed": false },
+  { "name": "Sortablejs", "order": 8, "fixed": false }
 ];
 
 export default {
@@ -65,9 +68,7 @@ export default {
   },
   data() {
     return {
-      list: message.map((name, index) => {
-        return { name, order: index + 1, fixed: false };
-      }),
+      list: message,
       list2: [],
       editable: true,
       isDragging: false,
@@ -83,6 +84,7 @@ export default {
     onMove({ relatedContext, draggedContext }) {
       const relatedElement = relatedContext.element;
       const draggedElement = draggedContext.element;
+      console.log(relatedElement, draggedElement)
       return (
         (!relatedElement || !relatedElement.fixed) && !draggedElement.fixed
       );
